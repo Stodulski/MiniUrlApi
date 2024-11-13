@@ -1,10 +1,10 @@
 import express from "express";
 
 const app = express();
+import dotenv from "dotenv";
+dotenv.config();
 
 import connectDB from "./db";
-
-process.loadEnvFile();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
