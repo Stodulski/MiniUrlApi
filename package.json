@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "express": "^4.21.1",
+    "mongoose": "^8.8.1"
+  },
+  "name": "acortador",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "devDependencies": {
+    "@eslint/js": "^9.14.0",
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.97",
+    "eslint": "^8.57.1",
+    "globals": "^15.12.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.14.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "dev": "ts-node-dev src/index.ts",
+    "tsc": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
