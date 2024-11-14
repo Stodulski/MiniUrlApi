@@ -36,8 +36,10 @@ export const getUrl = async (req: Request, res: Response): Promise<void> => {
         const url: string = req.params.shortUrl;
         const urlExist = await searchUrl(url);
         if (!urlExist) throw new Error("Invalid URL");
-        console.log(urlExist)
-        const completeUrl = urlExist.startsWith('http') ? url : `https://${urlExist}`;
+        console.log(urlExist);
+        const completeUrl = urlExist.startsWith("http")
+            ? url
+            : `https://${urlExist}`;
         res.status(200).redirect(completeUrl);
     } catch (error) {
         res.status(400).json({

@@ -1,17 +1,20 @@
 import express from "express";
-
-const app = express();
 import dotenv from "dotenv";
-dotenv.config();
+import helmet from "helmet";
 
 import connectDB from "./db";
 
+import router from "./routes/main";
+
+const app = express();
+
+dotenv.config();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(helmet());
 
 connectDB();
-
-import router from "./routes/main";
 
 app.set("PORT", process.env.PORT || 3000);
 
