@@ -8,7 +8,10 @@ import { saveShortedUrl, searchUrl } from "../models/url";
 export const shortNewUrl = async (req: Request, res: Response) => {
     try {
         const urlEntry: UrlEntry = req.body;
-        if (!isValidUrl(urlEntry.url)) throw new Error("Invalid URL");
+        if (!isValidUrl(urlEntry.url)) {
+            res.status(400).json({ status: "Bad" });
+            return;
+        }
         let shortUrl: string = await createShortName();
         const urlData: UrlData = {
             url: urlEntry.url,
@@ -19,9 +22,9 @@ export const shortNewUrl = async (req: Request, res: Response) => {
         const newShortUrl: string = `${req.protocol}://${req.get(
             "host"
         )}/${isCreated}`;
-        res.status(200).json({ status: "Ok", url: newShortUrl });
+        res.status(201).json({ status: "Ok", url: newShortUrl });
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             status: "Bad",
             error:
                 error instanceof Error
@@ -31,22 +34,27 @@ export const shortNewUrl = async (req: Request, res: Response) => {
     }
 };
 
-export const getUrl = async (req: Request, res: Response): Promise<void> => {
+export const getUrl = async (req: Request, res: Response) => {
     try {
-        const url: string = req.params.shortUrl;
+        const url = req.params.shortUrl;
         const urlExist = await searchUrl(url);
-        if (!urlExist) throw new Error("Invalid URL");
-        console.log(urlExist);
+
+        if (!urlExist) {
+            res.status(404).json({ message: "Invalid URL" });
+            return;
+        }
+
         const completeUrl = urlExist.startsWith("http")
-            ? url
+            ? urlExist
             : `https://${urlExist}`;
-        res.status(200).redirect(completeUrl);
+
+        res.status(302).redirect(completeUrl);
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             message:
                 error instanceof Error
                     ? error.message
-                    : "An unknown error ocurred",
+                    : "An unknown error occurred",
         });
     }
 };

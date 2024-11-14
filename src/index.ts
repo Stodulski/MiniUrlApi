@@ -23,3 +23,5 @@ app.use(router);
 app.listen(app.get("PORT"), (): void => {
     console.log(`Server start at ${app.get("PORT")}`);
 });
+
+export default app
