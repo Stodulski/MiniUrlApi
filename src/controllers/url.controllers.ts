@@ -3,18 +3,13 @@ import { UrlEntry, UrlData } from "../types";
 import isValidUrl from "../utils/isValidUrl";
 import createShortName from "../utils/createShortName";
 
-import { saveShortedUrl, shortUrlIsAvailable, searchUrl } from "../models/url";
+import { saveShortedUrl, searchUrl } from "../models/url";
 
 export const shortNewUrl = async (req: Request, res: Response) => {
     try {
         const urlEntry: UrlEntry = req.body;
         if (!isValidUrl(urlEntry.url)) throw new Error("Invalid URL");
-        let shortUrl: string = createShortName();
-        let isAvailable: boolean = await shortUrlIsAvailable(shortUrl);
-        while (!isAvailable) {
-            shortUrl = createShortName();
-            isAvailable = await shortUrlIsAvailable(shortUrl);
-        }
+        let shortUrl: string = await createShortName();
         const urlData: UrlData = {
             url: urlEntry.url,
             shortUrl,
