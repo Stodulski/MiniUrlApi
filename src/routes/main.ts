@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { Router } from 'express'
 
-const router = Router();
+import { shortNewUrl, getUrl } from '../controllers/url.controllers'
 
-import { shortNewUrl, getUrl } from "../controllers/url.controllers";
+const router = Router()
 
 router.get('/:shortUrl', getUrl)
 
-router.post("/shorturl", shortNewUrl);
+router.post('/shorturl', shortNewUrl)
 
-export default router;
+export default router

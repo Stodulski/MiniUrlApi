@@ -1,27 +1,30 @@
-import express from "express";
-import dotenv from "dotenv";
-import helmet from "helmet";
+import express from 'express'
+import dotenv from 'dotenv'
+import helmet from 'helmet'
 
-import connectDB from "./db";
+import router from './routes/main'
 
-import router from "./routes/main";
+import connectDB from './db'
 
-const app = express();
+dotenv.config()
 
-dotenv.config();
+const app = express()
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(helmet());
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(helmet())
 
-connectDB();
+connectDB()
 
-app.set("PORT", process.env.PORT || 3000);
+const port: number =
+  !isNaN(Number(process.env.PORT)) && Number(process.env.PORT) !== 0
+    ? Number(process.env.PORT)
+    : 3000
 
-app.use(router);
+app.use(router)
 
-app.listen(app.get("PORT"), (): void => {
-    console.log(`Server start at ${app.get("PORT")}`);
-});
+app.listen(port, (): void => {
+  console.log(`Server start at port ${port}`)
+})
 
 export default app
