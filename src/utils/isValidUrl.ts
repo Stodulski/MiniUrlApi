@@ -1,10 +1,14 @@
 const isValidUrl = (url: string): boolean => {
     try {
-        new URL(url);
+        const testUrl = url.startsWith("http://") || url.startsWith("https://") 
+            ? url 
+            : `https://${url}`;
+        
+        new URL(testUrl);
         return true;
-    } catch (_) {
+    } catch (error) {
         return false;
     }
 };
 
-export default isValidUrl
+export default isValidUrl;
