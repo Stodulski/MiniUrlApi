@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { UrlEntry, UrlData } from '../types'
+import isValidUrl from '../utils/isValidUrl'
 import createShortName from '../utils/createShortName'
 
 import { saveShortedUrl, searchUrl } from '../models/url'
@@ -10,6 +11,11 @@ export const shortNewUrl = async (
 ): Promise<void> => {
   try {
     const urlEntry: UrlEntry = req.body
+
+    if (!isValidUrl(urlEntry.url)) {
+      res.status(400).json({ status: 'Bad' })
+      return
+    }
 
     const shortUrl = await createShortName()
     const urlData: UrlData = {

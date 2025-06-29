@@ -1,7 +1,11 @@
 const isValidUrl = (url: string): boolean => {
-  const urlPattern =
-    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
-  return urlPattern.test(url)
+  try {
+    const _ = new URL(url)
+    console.log(_)
+    return true
+  } catch (_) {
+    return false
+  }
 }
 
 export default isValidUrl
