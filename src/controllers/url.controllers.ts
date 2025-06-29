@@ -11,19 +11,18 @@ export const shortNewUrl = async (
 ): Promise<void> => {
   try {
     const urlEntry: UrlEntry = req.body
-    if (!isValidUrl(urlEntry.url)) {
-      res.status(400).json({ status: 'Bad' })
-      return
-    }
+
     const shortUrl = await createShortName()
     const urlData: UrlData = {
       url: urlEntry.url,
       shortUrl
     }
+
     const isCreated: string | undefined = await saveShortedUrl(urlData)
     if (isCreated === undefined) {
       throw new Error('Could not shorten URL')
     }
+
     const serverUrl: string | undefined = req.get('host')
 
     if (serverUrl === undefined) {
