@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import { UrlEntry, UrlData } from '../types'
-import isValidUrl from '../utils/isValidUrl'
 import createShortName from '../utils/createShortName'
 
 import { saveShortedUrl, searchUrl } from '../models/url'
